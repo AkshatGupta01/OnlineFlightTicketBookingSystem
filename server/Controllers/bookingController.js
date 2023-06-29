@@ -1,5 +1,5 @@
 const Booking = require("../models/bookingsModel");
-const Bus = require("../models/busModel");
+const Flight = require("../models/flightModel");
 const User = require("../models/usersModel");
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const { v4: uuidv4 } = require("uuid");
@@ -26,22 +26,22 @@ const BookSeat = async (req, res) => {
     const user = await User.findById(req.params.userId);
     // res.json(user._id)
     await newBooking.save();
-    const bus = await Bus.findById(req.body.bus); // get the bus from the request body
-    bus.seatsBooked = [...bus.seatsBooked, ...req.body.seats]; // add the booked seats to the bus seatsBooked array in the database
+    const flight = await Flight.findById(req.body.flight); // get the flight from the request body
+    flight.seatsBooked = [...flight.seatsBooked, ...req.body.seats]; // add the booked seats to the flight seatsBooked array in the database
 
-    await bus.save();
+    await flight.save();
     // send email to user with the booking details
     let mailOptions = {
       from: process.env.EMAIL,
       to: user.email,
       subject: "Booking Details",
       text: `Hello ${user.name}, your booking details are as follows:
-      Bus: ${bus.name}
+      Flight: ${flight.name}
       Seats: ${req.body.seats}
-      Departure Time: ${moment(bus.departure, "HH:mm:ss").format("hh:mm A")}
-      Arrival Time: ${moment(bus.arrival, "HH:mm:ss").format("hh:mm A")}
-      Journey Date: ${bus.journeyDate}
-      Total Price: ${bus.price * req.body.seats.length} MAD
+      Departure Time: ${moment(flight.departure, "HH:mm:ss").format("hh:mm A")}
+      Arrival Time: ${moment(flight.arrival, "HH:mm:ss").format("hh:mm A")}
+      Journey Date: ${flight.journeyDate}
+      Total Price: ${flight.price * req.body.seats.length} MAD
       Thank you for choosing us! 
       `,
     };
@@ -71,7 +71,7 @@ const BookSeat = async (req, res) => {
 
 const GetAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find().populate("bus").populate("user");
+    const bookings = await Booking.find().populate("flight").populate("user");
     res.status(200).send({
       message: "All bookings",
       data: bookings,
@@ -89,7 +89,7 @@ const GetAllBookings = async (req, res) => {
 const GetAllBookingsByUser = async (req, res) => {
   try {
     const bookings = await Booking.find({ user: req.params.user_Id }).populate([
-      "bus",
+      "flight",
       "user",
     ]);
     res.status(200).send({
@@ -106,13 +106,13 @@ const GetAllBookingsByUser = async (req, res) => {
   }
 };
 
-// cancel booking by id and remove the seats from the bus seatsBooked array
+// cancel booking by id and remove the seats from the flight seatsBooked array
 const CancelBooking = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.booking_id);
     const user = await User.findById(req.params.user_id);
-    const bus = await Bus.findById(req.params.bus_id);
-    if (!booking || !user || !bus) {
+    const flight = await Flight.findById(req.params.flight_id);
+    if (!booking || !user || !flight) {
       res.status(404).send({
         message: "Booking not found",
         data: error,
@@ -121,10 +121,10 @@ const CancelBooking = async (req, res) => {
     }
 
     booking.remove();
-    bus.seatsBooked = bus.seatsBooked.filter(
+    flight.seatsBooked = flight.seatsBooked.filter(
       (seat) => !booking.seats.includes(seat)
     );
-    await bus.save();
+    await flight.save();
     res.status(200).send({
       message: "Booking cancelled successfully",
       data: booking,

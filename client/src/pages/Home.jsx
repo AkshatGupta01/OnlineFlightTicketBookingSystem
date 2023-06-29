@@ -2,26 +2,26 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
-import Bus from "../components/Bus";
+import Flight from "../components/Flight";
 import { Row, Col, message } from "antd";
 import { Helmet } from "react-helmet";
 
 function Home() {
   const dispatch = useDispatch();
-  const [buses, setBuses] = useState([]);
+  const [flights, setFlights] = useState([]);
   const [cities, setCities] = useState([]);
   const [filters, setFilters] = useState({});
 
-  const getBusesByFilter = useCallback(async () => {
+  const getFlightsByFilter = useCallback(async () => {
     dispatch(ShowLoading());
     const from = filters.from;
     const to = filters.to;
     const journeyDate = filters.journeyDate;
     try {
       const { data } = await axiosInstance.post(
-        `/api/buses/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
+        `/api/flights/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
       );
-      setBuses(data.data);
+      setFlights(data.data);
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
@@ -37,9 +37,9 @@ function Home() {
 
   useCallback(() => {
     if (filters.from && filters.to && filters.journeyDate) {
-      getBusesByFilter();
+      getFlightsByFilter();
     }
-  }, [filters.from, filters.to, filters.journeyDate, getBusesByFilter]);
+  }, [filters.from, filters.to, filters.journeyDate, getFlightsByFilter]);
 
   return (
     <>
@@ -98,7 +98,7 @@ function Home() {
               <div className="flex justify-center gap-4">
                 <button
                   onClick={() => {
-                    getBusesByFilter();
+                    getFlightsByFilter();
                   }}
                   className="relative inline-flex items-center justify-start
                     px-10 py-3 overflow-hidden font-bold rounded-full
@@ -116,17 +116,17 @@ function Home() {
           </Row>
         </div>
         <Row gutter={[15, 15]}>
-          {buses.map((bus, index) => {
+          {flights.map((flight, index) => {
             return (
               <Col key={index} lg={24} sm={24}>
-                <Bus bus={bus} />
+                <Flight flight={flight} />
               </Col>
             );
           })}
-          {buses.length === 0 && (
+          {flights.length === 0 && (
             <div className="flex justify-center w-full">
               <h1 className="text-2xl font-bold text-gray-500">
-                No buses found
+                No flights found
               </h1>
             </div>
           )}

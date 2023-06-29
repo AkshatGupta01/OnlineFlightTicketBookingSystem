@@ -6,9 +6,9 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import PageTitle from "../components/PageTitle";
 import moment from "moment";
 import { useReactToPrint } from "react-to-print";
-import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
 import QRCode from "react-qr-code";
+import logo from "../assets/constants";
 
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
@@ -28,7 +28,7 @@ function Bookings() {
         const mappedData = response.data.data.map((booking) => {
           return {
             ...booking,
-            ...booking.bus,
+            ...booking.flight,
             key: booking._id,
             user: booking.user.name,
           };
@@ -49,11 +49,11 @@ function Bookings() {
       const res = await axiosInstance.get(
         `/api/bookings/${localStorage.getItem("user_id")}`
       );
-      const bus_id = res.data.data[0].bus._id;
+      const flight_id = res.data.data[0].flight._id;
       const user_id = res.data.data[0].user._id;
       const booking_id = res.data.data[0]._id;
       const response = await axiosInstance.delete(
-        `/api/bookings/${booking_id}/${user_id}/${bus_id}`,
+        `/api/bookings/${booking_id}/${user_id}/${flight_id}`,
         {}
       );
       dispatch(HideLoading());
@@ -73,7 +73,7 @@ function Bookings() {
     {
       title: "Flight Name",
       dataIndex: "name",
-      key: "bus",
+      key: "flight",
     },
     {
       title: "Full Name",
@@ -83,8 +83,8 @@ function Bookings() {
 
     {
       title: "Flight Number",
-      dataIndex: "busNumber",
-      key: "bus",
+      dataIndex: "flightNumber",
+      key: "flight",
     },
     {
       title: "Journey Date",
@@ -173,7 +173,7 @@ function Bookings() {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center my-1">
                             <span className="mr-3 rounded-full bg-white w-8 h-8">
-                              <img alt="logo" src={logo} className="h-8 p-1" />
+                              <img alt="logo" src="https://media.istockphoto.com/id/1137971264/vector/airplane-fly-out-logo-plane-taking-off-stylized-sign.jpg?s=612x612&w=0&k=20&c=TH1vDs4wmGnfWapq_e1XYxqzQV_qxaF4_aJWoDJyKNI=" className="h-8 p-1" />
                             </span>
                             <h2 className="font-medium">
                               {selectedBooking?.name}

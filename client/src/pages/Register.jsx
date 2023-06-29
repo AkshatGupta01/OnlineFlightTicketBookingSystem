@@ -22,7 +22,7 @@ function Register() {
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        navigate("/login");
+        navigate("/");
       } else {
         message.error(response.data.message);
       }
@@ -51,14 +51,13 @@ function Register() {
             className="hidden lg:flex w-full lg:w-3/4"
             style={{
               backgroundSize: "cover",
-              backgroundImage: `url("https://wallpapercave.com/wp/wp6913872.jpg")`,
+              backgroundImage: `url("https://img.freepik.com/premium-photo/3d-ticket-flight-airplane-payment-by-credit-card-3d-travel-booking-service-3d-render-illustration_696265-612.jpg?w=740")`,
               backgroundPosition: "center center",
               backgroundRepeat: "no-repeat",
             }}
-          >
-            <div className="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
-          </div>
-          <div className="from-gray-50 to-blue-500 bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
+          />
+
+          <div className="flex w-full lg:w-1/2 justify-center items-center space-y-8">
             <div className="w-3/4 px-8 md:px-32 lg:px-24">
               <div className="flex flex-col items-center mb-10">
                 <Link

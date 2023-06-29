@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/img/logo.png";
+import logo from "../assets/constants"
 import moment from "moment";
 
-function Bus({ bus }) {
+function Flight({ flight }) {
   const navigate = useNavigate();
   return (
     <>
@@ -11,34 +11,34 @@ function Bus({ bus }) {
         <div className="flex flex-row items-baseline flex-nowrap bg-gray-100 p-2">
           <img className="h-10 w-10 rounded-full mr-4" src={logo} alt="Logo" />
           <h1 className="ml-2 uppercase font-bold">Journey Date</h1>
-          <p className="ml-2 font-base text-gray-500">{bus.journeyDate}</p>
+          <p className="ml-2 font-base text-gray-500">{flight.journeyDate}</p>
         </div>
         <div className="mt-2 flex justify-start bg-white p-2"></div>
         <div className="mt-2 flex sm:flex-row mx-6 sm:justify-between flex-wrap ">
           <div className="flex flex-row place-items-center p-2">
             <div className="flex flex-col ml-2">
-              <p className="text-base font-bold">{bus.name}</p>
+              <p className="text-base font-bold">{flight.name}</p>
             </div>
           </div>
 
           <div className="flex flex-col p-2">
             <p className="font-bold">Departure Time</p>
             <p className="font-base">
-              {moment(bus.departure, "HH:mm").format("hh:mm A")}
+              {moment(flight.departure, "HH:mm").format("hh:mm A")}
             </p>
 
             <p className="font-bold">From </p>
-            <p className="text-gray-500">{bus.from}</p>
+            <p className="text-gray-500">{flight.from}</p>
           </div>
           <div className="flex flex-col flex-wrap p-2">
             <p className="font-bold">Arrival Time</p>
             <p className="font-base">
-              {moment(bus.arrival, "HH:mm").format("hh:mm A")}
+              {moment(flight.arrival, "HH:mm").format("hh:mm A")}
             </p>
 
             <p className="font-bold">To</p>
 
-            <p className="text-gray-500">{bus.to}</p>
+            <p className="text-gray-500">{flight.to}</p>
           </div>
         </div>
         <div className="mt-4 bg-gray-100 flex flex-row flex-wrap md:flex-nowrap justify-between items-baseline">
@@ -60,7 +60,7 @@ function Bus({ bus }) {
 
             <div className="text-sm mx-2 flex flex-col">
               <p className="font-bold text-base">Price</p>
-              <p className="font-base">{bus.price} DH</p>
+              <p className="font-base">{flight.price} DH</p>
             </div>
           </div>
           <div className="md:border-l-2 mx-6 md:border-dotted flex flex-row py-4 mr-6 flex-wrap">
@@ -85,14 +85,14 @@ function Bus({ bus }) {
                 group"
               onClick={() => {
                 if (localStorage.getItem("user_id")) {
-                  navigate(`/book-now/${bus._id}`);
+                  navigate(`/book-now/${flight._id}`);
                 } else {
                   navigate(`/login`);
                 }
                 // clear local storage
                 localStorage.removeItem("idTrip");
                 // set id trip local storage
-                localStorage.setItem("idTrip", bus._id);
+                localStorage.setItem("idTrip", flight._id);
               }}
             >
               <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
@@ -109,4 +109,4 @@ function Bus({ bus }) {
   );
 }
 
-export default Bus;
+export default Flight;

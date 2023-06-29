@@ -4,13 +4,13 @@ import { Modal, Row, Form, Col, message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 
-function BusForm({
-  showBusForm,
-  setShowBusForm,
+function FlightForm({
+  showFlightForm,
+  setShowFlightForm,
   type = "add",
   getData,
-  selectedBus,
-  setSelectedBus,
+  selectedFlight,
+  setSelectedFlight,
 }) {
   const dispatch = useDispatch();
   const [cities, setCities] = useState([]);
@@ -20,10 +20,10 @@ function BusForm({
       dispatch(ShowLoading());
       let response = null;
       if (type === "add") {
-        response = await axiosInstance.post("/api/buses/add-bus", values);
+        response = await axiosInstance.post("/api/flights/add-flight", values);
       } else {
         response = await axiosInstance.put(
-          `/api/buses/${selectedBus._id}`,
+          `/api/flights/${selectedFlight._id}`,
           values
         );
       }
@@ -33,8 +33,8 @@ function BusForm({
         message.error(response.data.message);
       }
       getData();
-      setShowBusForm(false);
-      setSelectedBus(null);
+      setShowFlightForm(false);
+      setSelectedFlight(null);
       dispatch(HideLoading());
     } catch (error) {
       message.error(error.message);
@@ -51,27 +51,27 @@ function BusForm({
   return (
     <Modal
       width={800}
-      title={type === "add" ? "Add Bus" : "Update Bus"}
-      visible={showBusForm}
+      title={type === "add" ? "Add Flight" : "Update Flight"}
+      visible={showFlightForm}
       onCancel={() => {
-        setSelectedBus(null);
-        setShowBusForm(false);
+        setSelectedFlight(null);
+        setShowFlightForm(false);
       }}
       footer={false}
     >
-      <Form layout="vertical" onFinish={onFinish} initialValues={selectedBus}>
+      <Form layout="vertical" onFinish={onFinish} initialValues={selectedFlight}>
         <Row gutter={[10, 10]}>
           <Col lg={24} xs={24}>
             <Form.Item
-              label="Bus Name"
+              label="Flight Name"
               name="name"
               rules={[
                 {
                   required: type === "add" ? true : true,
                   message:
                     type === "add"
-                      ? "Please enter bus name"
-                      : "Please enter bus name",
+                      ? "Please enter flight name"
+                      : "Please enter flight name",
                 },
               ]}
             >
@@ -83,12 +83,12 @@ function BusForm({
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item
-              label="Bus Number"
-              name="busNumber"
+              label="flight Number"
+              name="flightNumber"
               rules={[
                 {
                   required: type === "add" ? true : true,
-                  message: "Please input bus number!",
+                  message: "Please input flight number!",
                 },
               ]}
             >
@@ -105,7 +105,7 @@ function BusForm({
               rules={[
                 {
                   required: type === "add" ? true : true,
-                  message: "Please input bus capacity!",
+                  message: "Please input flight capacity!",
                 },
               ]}
             >
@@ -280,4 +280,4 @@ function BusForm({
   );
 }
 
-export default BusForm;
+export default FlightForm;

@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.use("/api/users", require("./routes/usersRoutes"));
-app.use("/api/buses", require("./routes/busesRoutes"));
+app.use("/api/flights", require("./routes/flightsRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/bookings", require("./routes/bookingsRoutes"));
 app.use("/api/cities", require("./routes/citiesRoutes"));

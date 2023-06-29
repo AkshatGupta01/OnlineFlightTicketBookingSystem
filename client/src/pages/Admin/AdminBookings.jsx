@@ -23,7 +23,7 @@ function AdminBookings() {
         const mappedData = response.data.data.map((booking) => {
           return {
             ...booking,
-            ...booking.bus,
+            ...booking.flight,
             key: booking._id,
           };
         });
@@ -39,9 +39,9 @@ function AdminBookings() {
 
   const columns = [
     {
-      title: "Bus Name",
+      title: "Flight Name",
       dataIndex: "name",
-      key: "bus",
+      key: "flight",
     },
     {
       title: "Full Name",
@@ -50,9 +50,9 @@ function AdminBookings() {
     },
 
     {
-      title: "Bus Number",
-      dataIndex: "busNumber",
-      key: "bus",
+      title: "Flight Number",
+      dataIndex: "flightNumber",
+      key: "flight",
     },
     {
       title: "Journey Date",

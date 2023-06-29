@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/img/logo.png";
 
 function DefaultLayout({ children }) {
   const navigate = useNavigate();
@@ -32,8 +31,8 @@ function DefaultLayout({ children }) {
       icon: "ri-home-line",
     },
     {
-      name: "Buses",
-      path: "/admin/buses",
+      name: "Flights",
+      path: "/admin/flights",
       icon: "ri-bus-line",
     },
     {

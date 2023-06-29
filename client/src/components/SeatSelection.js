@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
-  const capacity = bus.capacity;
+function SeatSelection({ selectedSeats, setSelectedSeats, flight }) {
+  const capacity = flight.capacity;
 
   const selectOrUnselectSeat = (seatNumber) => {
     if (selectedSeats.includes(seatNumber)) {
@@ -20,7 +20,7 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
             selectedSeats.includes(seat + 1);
             if (selectedSeats.includes(seat + 1)) {
               seatClass = `btn btn-circle btn-outline bg-blue-500 cursor-pointer `;
-            } else if (bus.seatsBooked.includes(seat + 1)) {
+            } else if (flight.seatsBooked.includes(seat + 1)) {
               seatClass = `btn btn-circle btn-outline bg-red-500 pointer-events-none cursor-not-allowed`;
             }
 

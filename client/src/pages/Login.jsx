@@ -22,7 +22,7 @@ function Login() {
         const idTrip = localStorage.getItem("idTrip");
 
         if (response.data.user.isAdmin === true) {
-          navigate("/admin/buses");
+          navigate("/admin/flights");
         } else if (idTrip == null) {
           navigate("/bookings");
         } else if (idTrip !== null) {

@@ -11,7 +11,7 @@ const Index = lazy(() => import("./pages/Index"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const AdminBookings = lazy(() => import("./pages/Admin/AdminBookings"));
-const AdminBuses = lazy(() => import("./pages/Admin/AdminBuses"));
+const AdminFlights = lazy(() => import("./pages/Admin/AdminFlights"));
 const AdminUsers = lazy(() => import("./pages/Admin/AdminUsers"));
 const Home = lazy(() => import("./pages/Home"));
 const BookNow = lazy(() => import("./pages/BookNow"));
@@ -29,14 +29,14 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
-            {/* <Route
+            <Route
               path="/"
               element={
                 <PublicRoute>
                   <Index />
                 </PublicRoute>
               }
-            /> */}
+            />
 
             <Route
               path="/password-reset-success"
@@ -111,10 +111,10 @@ function App() {
             />
 
             <Route
-              path="/admin/buses"
+              path="/admin/flights"
               element={
                 <ProtectedRoute>
-                  <AdminBuses />
+                  <AdminFlights />
                 </ProtectedRoute>
               }
             />
@@ -128,7 +128,7 @@ function App() {
             />
 
             <Route
-              path="/"
+              path="/login"
               element={
                 <PublicRoute>
                   <Login />
