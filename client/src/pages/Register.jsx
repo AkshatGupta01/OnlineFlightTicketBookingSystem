@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
+import base_url from "../assets/url";
 
 function Register() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Register() {
 
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/auth/create-user", values);
+      const response = await axios.post(`${base_url}/api/auth/create-user`, values);
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
+import base_url from "../assets/url";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function ForgotPassword() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/auth/requestPasswordReset",
+        `${base_url}/api/auth/requestPasswordReset`,
         values
       );
       if (response.status === 200) {

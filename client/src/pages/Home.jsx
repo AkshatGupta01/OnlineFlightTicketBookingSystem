@@ -5,6 +5,7 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import Flight from "../components/Flight";
 import { Row, Col, message } from "antd";
 import { Helmet } from "react-helmet";
+import base_url from "../assets/url";
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function Home() {
     const journeyDate = filters.journeyDate;
     try {
       const { data } = await axiosInstance.post(
-        `/api/flights/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
+        `${base_url}/api/flights/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
       );
       setFlights(data.data);
       dispatch(HideLoading());
@@ -30,7 +31,7 @@ function Home() {
   }, [filters, dispatch]);
 
   useEffect(() => {
-    axiosInstance.get("/api/cities/get-all-cities").then((response) => {
+    axiosInstance.get(`${base_url}/api/cities/get-all-cities`).then((response) => {
       setCities(response.data.data);
     });
   }, []);

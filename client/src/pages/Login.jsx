@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
+import base_url from "../assets/url";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Login() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/auth/login", values);
+      const response = await axios.post(`${base_url}/api/auth/login`, values);
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);

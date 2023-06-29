@@ -6,6 +6,7 @@ import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import PageTitle from "../../components/PageTitle";
 import moment from "moment";
 import { Helmet } from "react-helmet";
+import base_url from "../../assets/url";
 
 function AdminBookings() {
   const [bookings, setBookings] = useState([]);
@@ -15,7 +16,7 @@ function AdminBookings() {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.get(
-        `/api/bookings/get-all-bookings`,
+        `${base_url}/api/bookings/get-all-bookings`,
         {}
       );
       dispatch(HideLoading());

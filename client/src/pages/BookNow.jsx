@@ -8,6 +8,7 @@ import SeatSelection from "../components/SeatSelection";
 import StripeCheckout from "react-stripe-checkout";
 import { Helmet } from "react-helmet";
 import moment from "moment";
+import base_url from "../assets/url";
 
 function BookNow() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function BookNow() {
   const getFlight = useCallback(async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.get(`/api/flights/${params.id}`);
+      const response = await axiosInstance.get(`${base_url}/api/flights/${params.id}`);
       dispatch(HideLoading());
       if (response.data.success) {
         setFlight(response.data.data);
@@ -36,7 +37,7 @@ function BookNow() {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
-        `/api/bookings/book-seat/${localStorage.getItem("user_id")}`,
+        `${base_url}/api/bookings/book-seat/${localStorage.getItem("user_id")}`,
         {
           flight: flight._id,
           seats: selectedSeats,
@@ -59,7 +60,7 @@ function BookNow() {
   const onToken = async (token) => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/bookings/make-payment", {
+      const response = await axiosInstance.post(`${base_url}/api/bookings/make-payment`, {
         token,
         amount: selectedSeats.length * flight.price,
       });

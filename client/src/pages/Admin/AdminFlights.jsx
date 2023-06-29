@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table } from "antd";
 import { Helmet } from "react-helmet";
+import base_url from "../../assets/url";
 
 function AdminFlights() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function AdminFlights() {
   const getFlights = useCallback(async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/flights/get-all-flights", {});
+      const response = await axiosInstance.post(`${base_url}/api/flights/get-all-flights`, {});
       dispatch(HideLoading());
       if (response.data.success) {
         setFlights(response.data.data);
@@ -32,7 +33,7 @@ function AdminFlights() {
   const deleteFlight = async (_id) => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.delete(`/api/flights/${_id}`, {});
+      const response = await axiosInstance.delete(`${base_url}/api/flights/${_id}`, {});
 
       dispatch(HideLoading());
       if (response.data.success) {

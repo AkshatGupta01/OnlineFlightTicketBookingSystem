@@ -6,15 +6,16 @@ import { useEffect } from "react";
 import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table } from "antd";
 import { Helmet } from "react-helmet";
+import base_url from "../../assets/url";
 
 function AdminUsers() {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
 
-  const getUsers = useCallback( async () => {
+  const getUsers = useCallback(async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.get("/api/users/get-all-users", {});
+      const response = await axiosInstance.get(`${base_url}/api/users/get-all-users`, {});
       dispatch(HideLoading());
       if (response.data.success) {
         setUsers(response.data.data);

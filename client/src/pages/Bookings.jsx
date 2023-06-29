@@ -9,6 +9,7 @@ import { useReactToPrint } from "react-to-print";
 import { Helmet } from "react-helmet";
 import QRCode from "react-qr-code";
 import logo from "../assets/constants";
+import base_url from "../assets/url";
 
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
@@ -20,7 +21,7 @@ function Bookings() {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.get(
-        `/api/bookings/${localStorage.getItem("user_id")}`,
+        `${base_url}/api/bookings/${localStorage.getItem("user_id")}`,
         {}
       );
       dispatch(HideLoading());
@@ -47,13 +48,13 @@ function Bookings() {
     try {
       dispatch(ShowLoading());
       const res = await axiosInstance.get(
-        `/api/bookings/${localStorage.getItem("user_id")}`
+        `${base_url}/api/bookings/${localStorage.getItem("user_id")}`
       );
       const flight_id = res.data.data[0].flight._id;
       const user_id = res.data.data[0].user._id;
       const booking_id = res.data.data[0]._id;
       const response = await axiosInstance.delete(
-        `/api/bookings/${booking_id}/${user_id}/${flight_id}`,
+        `${base_url}/api/bookings/${booking_id}/${user_id}/${flight_id}`,
         {}
       );
       dispatch(HideLoading());

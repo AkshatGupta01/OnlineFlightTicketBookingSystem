@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Modal, Row, Form, Col, message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
+import base_url from "../assets/url";
 
 function FlightForm({
   showFlightForm,
@@ -20,10 +21,10 @@ function FlightForm({
       dispatch(ShowLoading());
       let response = null;
       if (type === "add") {
-        response = await axiosInstance.post("/api/flights/add-flight", values);
+        response = await axiosInstance.post(`${base_url}/api/flights/add-flight`, values);
       } else {
         response = await axiosInstance.put(
-          `/api/flights/${selectedFlight._id}`,
+          `${base_url}/api/flights/${selectedFlight._id}`,
           values
         );
       }
@@ -43,7 +44,7 @@ function FlightForm({
   };
 
   useEffect(() => {
-    axiosInstance.get("/api/cities/get-all-cities").then((response) => {
+    axiosInstance.get(`${base_url}/api/cities/get-all-cities`).then((response) => {
       setCities(response.data.data);
     });
   }, []);

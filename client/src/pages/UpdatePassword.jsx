@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
+import base_url from "../assets/url";
 
 function UpdatePassword() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function UpdatePassword() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/auth/ResetPassword/${userId}/${resetString}`,
+        `${base_url}/api/auth/ResetPassword/${userId}/${resetString}`,
         values
       );
       if (response.status === 200) {
